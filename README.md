@@ -120,6 +120,12 @@ Conferir no BigQuery (console ou `bq` CLI):
 SELECT COUNT(*) FROM `seu-project-id.olist_ecommerce.orders`;
 ```
 
+## Resultado no BigQuery
+
+As 9 tabelas carregadas pelo pipeline no dataset `olist_ecommerce`:
+
+![Tabelas do dataset olist_ecommerce no BigQuery](docs/bigquery-tabelas.png)
+
 ## Análises em SQL
 
 Com as tabelas no BigQuery, a pasta [`sql/`](sql/) traz 5 consultas
