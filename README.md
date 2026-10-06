@@ -126,6 +126,18 @@ As 9 tabelas carregadas pelo pipeline no dataset `olist_ecommerce`:
 
 ![Tabelas do dataset olist_ecommerce no BigQuery](docs/bigquery-tabelas.png)
 
+## Testes
+
+Testes automatizados (pytest) cobrem a leitura dos CSVs e as regras de limpeza:
+nomes de colunas, remoção de espaços, conversão de datas, duplicatas e CSVs com
+BOM. Eles rodam sem acesso ao BigQuery e a cada push via GitHub Actions
+(`.github/workflows/tests.yml`).
+
+```powershell
+pip install -r requirements-dev.txt
+pytest
+```
+
 ## Análises em SQL
 
 Com as tabelas no BigQuery, a pasta [`sql/`](sql/) traz 5 consultas
@@ -159,6 +171,8 @@ portfolio-etl-csv-bigquery/
 │   ├── raw/          # CSVs originais (não versionados)
 │   └── processed/    # saídas intermediárias opcionais (não versionados)
 ├── sql/              # consultas analíticas no BigQuery
+├── tests/            # testes automatizados (pytest)
+├── docs/             # imagens do README
 ├── src/
 │   ├── config.py      # variáveis de ambiente
 │   ├── extract.py      # leitura dos CSVs
@@ -181,11 +195,11 @@ portfolio-etl-csv-bigquery/
   janela e análise de negócio (receita, logística, pagamentos, satisfação)
 - Validação dos dados carregados (ex.: identificação de colunas de data
   carregadas como texto e correção na etapa de transformação)
+- Testes automatizados (pytest) e integração contínua com GitHub Actions
 - Boas práticas de projeto: variáveis de ambiente, `.gitignore`, documentação
 
 ## Possíveis melhorias futuras
 
 - Orquestrar com Airflow ou Dagster
 - Modelar um star schema (dbt) em vez de carregar as tabelas "como estão"
-- Testes automatizados para as funções de transformação
-- CI/CD (GitHub Actions) rodando o `--dry-run` a cada push
+- Testes de integração do `--dry-run` com uma amostra dos dados

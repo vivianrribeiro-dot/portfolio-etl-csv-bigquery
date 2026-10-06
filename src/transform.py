@@ -15,7 +15,7 @@ def _clean_column_names(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def _strip_string_columns(df: pd.DataFrame) -> pd.DataFrame:
-    object_cols = df.select_dtypes(include="object").columns
+    object_cols = df.select_dtypes(include=["object", "string"]).columns
     for col in object_cols:
         df[col] = df[col].str.strip()
     return df
