@@ -144,6 +144,10 @@ pelo pipeline.
 1,7 ponto menor que os entregues no prazo, e a logística para o Norte do país é
 o ponto mais crítico.
 
+Exemplo, consulta `05_satisfacao_vs_atraso` executada no BigQuery:
+
+![Resultado da consulta de satisfação vs. atraso no BigQuery](docs/bigquery-consulta-satisfacao.png)
+
 Para rodar uma consulta, abra o arquivo, troque `extreme-hull-449521-e8` pelo
 seu `GCP_PROJECT_ID` e execute no console do BigQuery.
 
