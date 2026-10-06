@@ -120,6 +120,27 @@ Conferir no BigQuery (console ou `bq` CLI):
 SELECT COUNT(*) FROM `seu-project-id.olist_ecommerce.orders`;
 ```
 
+## Análises em SQL
+
+Com as tabelas no BigQuery, a pasta [`sql/`](sql/) traz 5 consultas
+analíticas. Os resultados abaixo vêm da execução real sobre os dados carregados
+pelo pipeline.
+
+| Consulta | Pergunta | Resultado |
+|---|---|---|
+| [01_receita_mensal](sql/01_receita_mensal.sql) | Quanto o marketplace vendeu por mês? | Crescimento forte ao longo de 2017, com ticket médio estável em torno de R$ 140–150 |
+| [02_top_categorias](sql/02_top_categorias.sql) | Quais categorias faturam mais? | `health_beauty` (R$ 1,26 mi), `watches_gifts` (R$ 1,21 mi) e `bed_bath_table` (R$ 1,04 mi) |
+| [03_tempo_entrega_por_estado](sql/03_tempo_entrega_por_estado.sql) | Onde a entrega demora mais? | Estados do Norte lideram: RR (29,4 dias), AP (27,2) e AM (26,4) |
+| [04_formas_de_pagamento](sql/04_formas_de_pagamento.sql) | Como os clientes pagam? | Cartão de crédito: 78,3% do valor, em média 3,5 parcelas; boleto: 17,9% |
+| [05_satisfacao_vs_atraso](sql/05_satisfacao_vs_atraso.sql) | O atraso afeta a avaliação? | Entregas no prazo: nota média 4,29. Atrasadas: 2,57 |
+
+**Insight principal:** pedidos entregues com atraso recebem nota média cerca de
+1,7 ponto menor que os entregues no prazo, e a logística para o Norte do país é
+o ponto mais crítico.
+
+Para rodar uma consulta, abra o arquivo, troque `extreme-hull-449521-e8` pelo
+seu `GCP_PROJECT_ID` e execute no console do BigQuery.
+
 ## Estrutura do projeto
 
 ```
@@ -127,9 +148,11 @@ portfolio-etl-csv-bigquery/
 ├── data/
 │   ├── raw/          # CSVs originais (não versionados)
 │   └── processed/    # saídas intermediárias opcionais (não versionados)
+├── sql/              # consultas analíticas no BigQuery
 ├── src/
 │   ├── config.py      # variáveis de ambiente
 │   ├── extract.py      # leitura dos CSVs
+│   ├── download_data.py # download do dataset via kagglehub
 │   ├── transform.py    # limpeza/normalização
 │   ├── load.py         # carga no BigQuery
 │   └── main.py         # orquestração + CLI
@@ -144,6 +167,10 @@ portfolio-etl-csv-bigquery/
 - Limpeza e padronização de dados (tipos, datas, duplicatas, strings)
 - Modelagem de um pipeline ETL idempotente e parametrizável
 - Integração com um data warehouse em nuvem (BigQuery) via API Python
+- SQL analítico no BigQuery: JOINs entre várias tabelas, agregações, funções de
+  janela e análise de negócio (receita, logística, pagamentos, satisfação)
+- Validação dos dados carregados (ex.: identificação de colunas de data
+  carregadas como texto e correção na etapa de transformação)
 - Boas práticas de projeto: variáveis de ambiente, `.gitignore`, documentação
 
 ## Possíveis melhorias futuras
